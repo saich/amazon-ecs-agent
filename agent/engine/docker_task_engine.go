@@ -335,7 +335,7 @@ func (engine *DockerTaskEngine) synchronizeState() {
 	}
 	seelog.Warnf("synchronizeState() Checkpoint #: %d", 4)
 	eniAttachments := engine.state.AllENIAttachments()
-	seelog.Warnf("synchronizeState() Checkpoint #: %d", 5)
+	seelog.Warnf("synchronizeState() Checkpoint #: %d. Number of ENI attachments: %d", 5, len(eniAttachments))
 	for _, eniAttachment := range eniAttachments {
 		seelog.Warnf("synchronizeState() Checkpoint #: %d", 6)
 		timeoutFunc := func() {
@@ -358,11 +358,17 @@ func (engine *DockerTaskEngine) synchronizeState() {
 		}
 	}
 
+	seelog.Warnf("synchronizeState() Checkpoint #: %d", 7)
+
 	tasks := engine.state.AllTasks()
+	seelog.Warnf("synchronizeState() Checkpoint #: %d. Total tasks: %d", 8, len(tasks))
 	tasksToStart := engine.filterTasksToStartUnsafe(tasks)
+	seelog.Warnf("synchronizeState() Checkpoint #: %d. Total tasks to start: %d", 9, len(tasksToStart))
 	for _, task := range tasks {
 		task.InitializeResources(engine.resourceFields)
 	}
+
+	seelog.Warnf("synchronizeState() Checkpoint #: %d", 10)
 
 	for _, task := range tasksToStart {
 		engine.startTask(task)
