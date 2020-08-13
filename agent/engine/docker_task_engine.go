@@ -324,14 +324,20 @@ func (engine *DockerTaskEngine) isTaskManaged(arn string) bool {
 // events to push upstream. It also initializes some fields of task resources and eni attachments that won't be populated
 // from loading state file.
 func (engine *DockerTaskEngine) synchronizeState() {
+	seelog.Warnf("synchronizeState() Checkpoint #: %d", 1)
 	engine.tasksLock.Lock()
+	seelog.Warnf("synchronizeState() Checkpoint #: %d", 2)
 	defer engine.tasksLock.Unlock()
 	imageStates := engine.state.AllImageStates()
+	seelog.Warnf("synchronizeState() Checkpoint #: %d", 3)
 	if len(imageStates) != 0 {
 		engine.imageManager.AddAllImageStates(imageStates)
 	}
+	seelog.Warnf("synchronizeState() Checkpoint #: %d", 4)
 	eniAttachments := engine.state.AllENIAttachments()
+	seelog.Warnf("synchronizeState() Checkpoint #: %d", 5)
 	for _, eniAttachment := range eniAttachments {
+		seelog.Warnf("synchronizeState() Checkpoint #: %d", 6)
 		timeoutFunc := func() {
 			eniAttachment, ok := engine.state.ENIByMac(eniAttachment.MACAddress)
 			if !ok {
