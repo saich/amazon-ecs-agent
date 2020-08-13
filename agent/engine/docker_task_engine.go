@@ -254,16 +254,21 @@ func (engine *DockerTaskEngine) Init(ctx context.Context) error {
 
 // MustInit blocks and retries until an engine can be initialized.
 func (engine *DockerTaskEngine) MustInit(ctx context.Context) {
+	seelog.Warnf("MustInit Checkpoint #: %d", 1)
 	if engine.initialized {
 		return
 	}
+	seelog.Warnf("MustInit Checkpoint #: %d", 2)
 	engine.mustInitLock.Lock()
+	seelog.Warnf("MustInit Checkpoint #: %d", 3)
 	defer engine.mustInitLock.Unlock()
+	seelog.Warnf("MustInit Checkpoint #: %d", 4)
 
 	errorOnce := sync.Once{}
 	taskEngineConnectBackoff := retry.NewExponentialBackoff(minEngineConnectRetryDelay, maxEngineConnectRetryDelay,
 		engineConnectRetryJitterMultiplier, engineConnectRetryDelayMultiplier)
 	retry.RetryWithBackoff(taskEngineConnectBackoff, func() error {
+		seelog.Warnf("MustInit Checkpoint #: %d", 5)
 		if engine.initialized {
 			return nil
 		}

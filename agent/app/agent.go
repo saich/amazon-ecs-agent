@@ -321,9 +321,9 @@ func (agent *ecsAgent) doStart(containerChangeEventStream *eventstream.EventStre
 
 	// Begin listening to the docker daemon and saving changes
 	taskEngine.SetSaver(stateManager)
-	seelog.Warnf("Checkpoint #: %d", 2.1)
+	seelog.Warnf("Checkpoint #: %f", 2.1)
 	imageManager.SetSaver(stateManager)
-	seelog.Warnf("Checkpoint #: %d", 2.2)
+	seelog.Warnf("Checkpoint #: %f", 2.2)
 	taskEngine.MustInit(agent.ctx)
 
 	seelog.Warnf("Checkpoint #: %d", 3)
