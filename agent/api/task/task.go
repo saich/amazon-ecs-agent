@@ -2521,8 +2521,10 @@ func (task *Task) getASMSecretsResource() ([]taskresource.TaskResource, bool) {
 func (task *Task) InitializeResources(resourceFields *taskresource.ResourceFields) {
 	task.lock.Lock()
 	defer task.lock.Unlock()
+	seelog.Warnf("InitializeResources() Checkpoint #: %d. len(task.ResourcesMapUnsafe)=%d", 1, len(task.ResourcesMapUnsafe))
 
-	for _, resources := range task.ResourcesMapUnsafe {
+	for i, resources := range task.ResourcesMapUnsafe {
+		seelog.Warnf("InitializeResources() Checkpoint #: %d. i=%d. len(resources)=%d", 2, i, len(resources))
 		for _, resource := range resources {
 			resource.Initialize(resourceFields, task.KnownStatusUnsafe, task.DesiredStatusUnsafe)
 		}
