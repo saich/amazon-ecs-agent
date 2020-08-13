@@ -14,6 +14,8 @@
 package retry
 
 import (
+	"fmt"
+
 	apierrors "github.com/aws/amazon-ecs-agent/agent/api/errors"
 	"github.com/aws/amazon-ecs-agent/agent/utils/ttime"
 	"golang.org/x/net/context"
@@ -50,8 +52,9 @@ func RetryWithBackoffCtx(ctx context.Context, backoff Backoff, fn func() error) 
 		if err == nil || (isRetriableErr && !retriableErr.Retry()) {
 			return err
 		}
-
-		_time.Sleep(backoff.Duration())
+		duration := backoff.Duration()
+		fmt.Println("Retry: Sleeping for: %v", duration)
+		_time.Sleep(duration)
 	}
 }
 
