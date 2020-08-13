@@ -365,7 +365,7 @@ func (engine *DockerTaskEngine) synchronizeState() {
 	tasksToStart := engine.filterTasksToStartUnsafe(tasks)
 	seelog.Warnf("synchronizeState() Checkpoint #: %d. Total tasks to start: %d", 9, len(tasksToStart))
 	for i, task := range tasks {
-		seelog.Warnf("synchronizeState() Checkpoint #: %f. Starting task: %d", 9.5, i)
+		seelog.Warnf("synchronizeState() Checkpoint #: %f. Starting task: %d. Task: %v", 9.5, i, task)
 		task.InitializeResources(engine.resourceFields)
 	}
 
