@@ -111,12 +111,15 @@ func (envfile *EnvironmentFileResource) Initialize(resourceFields *taskresource.
 	seelog.Warnf("envfile.Initialize() Checkpoint #: %d. %+v.", 1, envfile)
 	envfile.lock.Lock()
 	defer envfile.lock.Unlock()
+	seelog.Warnf("envfile.Initialize() Checkpoint #: %d. %+v.", 2, envfile)
 
 	envfile.initStatusToTransition()
+	seelog.Warnf("envfile.Initialize() Checkpoint #: %d. %+v.", 3, envfile)
 	envfile.credentialsManager = resourceFields.CredentialsManager
 	envfile.s3ClientCreator = factory.NewS3ClientCreator()
 	envfile.ioutil = ioutilwrapper.NewIOUtil()
 	envfile.bufio = bufiowrapper.NewBufio()
+	seelog.Warnf("envfile.Initialize() Checkpoint #: %d. %+v.", 4, envfile)
 
 	// if task isn't in 'created' status and desired status is 'running',
 	// reset the resource status to 'NONE' so we always retrieve the data
@@ -124,6 +127,7 @@ func (envfile *EnvironmentFileResource) Initialize(resourceFields *taskresource.
 	if taskKnownStatus < status.TaskCreated && taskDesiredStatus <= status.TaskRunning {
 		envfile.SetKnownStatus(resourcestatus.ResourceStatusNone)
 	}
+	seelog.Warnf("envfile.Initialize() Checkpoint #: %d. %+v.", 5, envfile)
 }
 
 func (envfile *EnvironmentFileResource) initStatusToTransition() {
