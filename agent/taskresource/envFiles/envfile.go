@@ -167,10 +167,10 @@ func (envfile *EnvironmentFileResource) updateAppliedStatusUnsafe(knownStatus re
 
 // SetKnownStatus safely sets the currently known status of the resource
 func (envfile *EnvironmentFileResource) SetKnownStatus(status resourcestatus.ResourceStatus) {
-	seelog.Warnf("envfile.Initialize() Checkpoint #: %d. %+v.", 1, envfile)
+	seelog.Warnf("envfile.SetKnownStatus() Checkpoint #: %d. %+v.", 1, envfile)
 	envfile.lock.Lock()
 	defer envfile.lock.Unlock()
-	seelog.Warnf("envfile.Initialize() Checkpoint #: %d. %+v.", 2, envfile)
+	seelog.Warnf("envfile.SetKnownStatus() Checkpoint #: %d. %+v.", 2, envfile)
 
 	envfile.knownStatusUnsafe = status
 	envfile.updateAppliedStatusUnsafe(status)
