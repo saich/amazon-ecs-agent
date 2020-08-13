@@ -234,21 +234,29 @@ func (engine *DockerTaskEngine) MarshalJSON() ([]byte, error) {
 // and operate normally.
 // This function must be called before any other function, except serializing and deserializing, can succeed without error.
 func (engine *DockerTaskEngine) Init(ctx context.Context) error {
+	seelog.Warnf("Init() Checkpoint #: %d", 1)
 	derivedCtx, cancel := context.WithCancel(ctx)
+	seelog.Warnf("Init() Checkpoint #: %d", 2)
 	engine.stopEngine = cancel
 	engine.ctx = derivedCtx
+	seelog.Warnf("Init() Checkpoint #: %d", 3)
 
 	// Open the event stream before we sync state so that e.g. if a container
 	// goes from running to stopped after we sync with it as "running" we still
 	// have the "went to stopped" event pending so we can be up to date.
 	err := engine.openEventstream(derivedCtx)
+	seelog.Warnf("Init() Checkpoint #: %d", 4)
 	if err != nil {
 		return err
 	}
+	seelog.Warnf("Init() Checkpoint #: %d", 5)
 	engine.synchronizeState()
+	seelog.Warnf("Init() Checkpoint #: %d", 6)
 	// Now catch up and start processing new events per normal
 	go engine.handleDockerEvents(derivedCtx)
+	seelog.Warnf("Init() Checkpoint #: %d", 7)
 	engine.initialized = true
+	seelog.Warnf("Init() Checkpoint #: %d", 8)
 	return nil
 }
 
