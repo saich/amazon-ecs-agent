@@ -268,11 +268,13 @@ func (engine *DockerTaskEngine) MustInit(ctx context.Context) {
 	taskEngineConnectBackoff := retry.NewExponentialBackoff(minEngineConnectRetryDelay, maxEngineConnectRetryDelay,
 		engineConnectRetryJitterMultiplier, engineConnectRetryDelayMultiplier)
 	retry.RetryWithBackoff(taskEngineConnectBackoff, func() error {
-		seelog.Warnf("MustInit Checkpoint #: %d", 5)
+		seelog.Warnf("MustInit Checkpoint #: %d, %v", 5, engine.initialized)
 		if engine.initialized {
 			return nil
 		}
+		seelog.Warnf("MustInit Checkpoint #: %d, %v", 6, engine.initialized)
 		err := engine.Init(ctx)
+		seelog.Warnf("MustInit Checkpoint #: %d, %v", 7, err)
 		if err != nil {
 			errorOnce.Do(func() {
 				seelog.Errorf("Task engine: could not connect to docker daemon: %v", err)
@@ -280,6 +282,8 @@ func (engine *DockerTaskEngine) MustInit(ctx context.Context) {
 		}
 		return err
 	})
+
+	seelog.Warnf("MustInit Checkpoint #: %d", 100)
 }
 
 // SetSaver sets the saver that is used by the DockerTaskEngine
