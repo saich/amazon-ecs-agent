@@ -374,7 +374,11 @@ func (engine *DockerTaskEngine) synchronizeState() {
 		engine.startTask(task)
 	}
 
+	seelog.Warnf("synchronizeState() Checkpoint #: %d", 11)
+
 	engine.saver.Save()
+
+	seelog.Warnf("synchronizeState() Checkpoint #: %d", 12)
 }
 
 // filterTasksToStartUnsafe filters only the tasks that need to be started after
