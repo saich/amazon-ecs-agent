@@ -125,9 +125,10 @@ func (envfile *EnvironmentFileResource) Initialize(resourceFields *taskresource.
 	// reset the resource status to 'NONE' so we always retrieve the data
 	// this is in case agent crashes
 	if taskKnownStatus < status.TaskCreated && taskDesiredStatus <= status.TaskRunning {
+		seelog.Warnf("envfile.Initialize() Checkpoint #: %d. %+v.", 5, envfile)
 		envfile.SetKnownStatus(resourcestatus.ResourceStatusNone)
 	}
-	seelog.Warnf("envfile.Initialize() Checkpoint #: %d. %+v.", 5, envfile)
+	seelog.Warnf("envfile.Initialize() Checkpoint #: %d. %+v.", 6, envfile)
 }
 
 func (envfile *EnvironmentFileResource) initStatusToTransition() {
