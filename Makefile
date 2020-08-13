@@ -89,8 +89,8 @@ docker-release: pause-container-release cni-plugins .out-stamp
 # Release packages our agent into a "scratch" based dockerfile
 release: certs docker-release
 	@./scripts/create-amazon-ecs-scratch
-	@docker build -f scripts/dockerfiles/Dockerfile.release -t "amazon/amazon-ecs-agent:latest" .
-	@echo "Built Docker image \"amazon/amazon-ecs-agent:latest\""
+	@docker build -f scripts/dockerfiles/Dockerfile.release -t "saich/amazon-ecs-agent:latest" .
+	@echo "Built Docker image \"saich/amazon-ecs-agent:latest\""
 
 # We need to bundle certificates with our scratch-based container
 certs: misc/certs/ca-certificates.crt

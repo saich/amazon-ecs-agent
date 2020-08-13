@@ -14,6 +14,7 @@
 package app
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/aws/amazon-ecs-agent/agent/app/args"
@@ -47,6 +48,7 @@ func Run(arguments []string) int {
 	}
 
 	logger.SetLevel(*parsedArgs.LogLevel)
+	fmt.Println("saich/amazon-aws-agent")
 
 	// Create an Agent object
 	agent, err := newAgent(aws.BoolValue(parsedArgs.BlackholeEC2Metadata), parsedArgs.AcceptInsecureCert)

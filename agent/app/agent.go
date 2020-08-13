@@ -221,6 +221,7 @@ func (agent *ecsAgent) doStart(containerChangeEventStream *eventstream.EventStre
 	imageManager engine.ImageManager,
 	client api.ECSClient) int {
 
+	seelog.Warn("Running custom agent..")
 	// check docker version >= 1.9.0, exit agent if older
 	if exitcode, ok := agent.verifyRequiredDockerVersion(); !ok {
 		return exitcode
@@ -307,6 +308,7 @@ func (agent *ecsAgent) doStart(containerChangeEventStream *eventstream.EventStre
 		}
 		return exitcodes.ExitTerminal
 	}
+	seelog.Warnf("Checkpoint #: %d", 1)
 	// Add container instance ARN to metadata manager
 	if agent.cfg.ContainerMetadataEnabled.Enabled() {
 		agent.metadataManager.SetContainerInstanceARN(agent.containerInstanceARN)
@@ -320,12 +322,15 @@ func (agent *ecsAgent) doStart(containerChangeEventStream *eventstream.EventStre
 	imageManager.SetSaver(stateManager)
 	taskEngine.MustInit(agent.ctx)
 
+	seelog.Warnf("Checkpoint #: %d", 2)
+
 	// Start back ground routines, including the telemetry session
 	deregisterInstanceEventStream := eventstream.NewEventStream(
 		deregisterContainerInstanceEventStreamName, agent.ctx)
 	deregisterInstanceEventStream.StartListening()
 	taskHandler := eventhandler.NewTaskHandler(agent.ctx, stateManager, state, client)
 	attachmentEventHandler := eventhandler.NewAttachmentEventHandler(agent.ctx, stateManager, client)
+	seelog.Warnf("Checkpoint #: %d", 3)
 	agent.startAsyncRoutines(containerChangeEventStream, credentialsManager, imageManager,
 		taskEngine, stateManager, deregisterInstanceEventStream, client, taskHandler, attachmentEventHandler, state)
 
