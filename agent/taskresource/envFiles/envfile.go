@@ -107,6 +107,8 @@ func NewEnvironmentFileResource(cluster, taskARN, region, dataDir, containerName
 func (envfile *EnvironmentFileResource) Initialize(resourceFields *taskresource.ResourceFields,
 	taskKnownStatus status.TaskStatus,
 	taskDesiredStatus status.TaskStatus) {
+
+	seelog.Warnf("envfile.Initialize() Checkpoint #: %d. %+v.", 1, envfile)
 	envfile.lock.Lock()
 	defer envfile.lock.Unlock()
 
