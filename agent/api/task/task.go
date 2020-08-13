@@ -2526,7 +2526,7 @@ func (task *Task) InitializeResources(resourceFields *taskresource.ResourceField
 	for i, resources := range task.ResourcesMapUnsafe {
 		seelog.Warnf("InitializeResources() Checkpoint #: %d. i=%s. resources=%v", 2, i, resources)
 		for j, resource := range resources {
-			seelog.Warnf("InitializeResources() Checkpoint #: %d. i=%v. len(resources)=%d", 3, i, len(resources))
+			seelog.Warnf("InitializeResources() Checkpoint #: %d. j=%v. resource=%v", 3, j, resource)
 			resource.Initialize(resourceFields, task.KnownStatusUnsafe, task.DesiredStatusUnsafe)
 		}
 	}
