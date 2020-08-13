@@ -317,12 +317,14 @@ func (agent *ecsAgent) doStart(containerChangeEventStream *eventstream.EventStre
 		agent.metadataManager.SetHostPublicIPv4Address(agent.getHostPublicIPv4AddressFromEC2Metadata())
 	}
 
+	seelog.Warnf("Checkpoint #: %d", 2)
+
 	// Begin listening to the docker daemon and saving changes
 	taskEngine.SetSaver(stateManager)
 	imageManager.SetSaver(stateManager)
 	taskEngine.MustInit(agent.ctx)
 
-	seelog.Warnf("Checkpoint #: %d", 2)
+	seelog.Warnf("Checkpoint #: %d", 3)
 
 	// Start back ground routines, including the telemetry session
 	deregisterInstanceEventStream := eventstream.NewEventStream(
@@ -330,7 +332,7 @@ func (agent *ecsAgent) doStart(containerChangeEventStream *eventstream.EventStre
 	deregisterInstanceEventStream.StartListening()
 	taskHandler := eventhandler.NewTaskHandler(agent.ctx, stateManager, state, client)
 	attachmentEventHandler := eventhandler.NewAttachmentEventHandler(agent.ctx, stateManager, client)
-	seelog.Warnf("Checkpoint #: %d", 3)
+	seelog.Warnf("Checkpoint #: %d", 4)
 	agent.startAsyncRoutines(containerChangeEventStream, credentialsManager, imageManager,
 		taskEngine, stateManager, deregisterInstanceEventStream, client, taskHandler, attachmentEventHandler, state)
 
